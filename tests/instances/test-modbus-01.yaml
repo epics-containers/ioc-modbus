@@ -4,7 +4,7 @@
 # contacted. run-tests.sh only runs it with start.sh --test.
 ioc_name: "{{ _global.get_env('IOC_NAME') }}"
 
-description: Test instance with a modbus TCP port and a Eurotherm 2000 controller
+description: Test instance with a modbus TCP port and Eurotherm 2000 and 3000 controllers
 
 entities:
   - type: devIocStats.iocAdminSoft
@@ -26,3 +26,9 @@ entities:
     port: TCTRL1
     ipaddress: 127.0.0.1
     modbus_prefix: EURTHM_MB_1
+
+  - type: eurothermModbus.Eurotherm3K
+    device: TEST-EA-TCTRL-02:EUTH
+    port: TCTRL2
+    ipaddress: 127.0.0.1
+    modbus_prefix: EURTHM_MB_2
