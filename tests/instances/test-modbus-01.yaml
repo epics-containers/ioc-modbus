@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://github.com/epics-containers/ioc-modbus/releases/latest/download/ibek.ioc.schema.json
+
+# A test instance: every device address is loopback, so nothing real is ever
+# contacted. run-tests.sh only runs it with start.sh --test.
+ioc_name: "{{ _global.get_env('IOC_NAME') }}"
+
+description: Test instance with a modbus TCP port and a Eurotherm 2000 controller
+
+entities:
+  - type: devIocStats.iocAdminSoft
+    IOC: "{{ ioc_name | upper }}"
+
+  - type: modbus.modbusPortConfigure
+    ASYNPORT: MB_TCP
+    IP: 127.0.0.1
+
+  - type: modbus.modbusAsynConfigure
+    MODBUSPORT: MB_TCP_RX
+    ASYNPORT: MB_TCP
+    FUNC_CODE: 3
+    DATA_LENGTH: 10
+    DATA_TYPE: 0
+
+  - type: eurothermModbus.Eurotherm2K
+    device: TEST-EA-TCTRL-01:EUTH
+    port: TCTRL1
+    ipaddress: 127.0.0.1
+    modbus_prefix: EURTHM_MB_1
